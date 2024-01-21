@@ -1,13 +1,29 @@
-export default function EditRecipe(){
+"use client";
+
+import EditRecipeForm from "@/app/components/EditRecipeForm";
+
+
+const getTopicById = async(id) => {
+    try {
+        const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+            cache: "no-store",
+        })
+        if(!res.ok){
+            throw new Error("Failed to fetch Topic");
+        }
+        return res.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+export default async function EditRecipe({params}){
+    const {id} = params;
+    const {topic} = await getTopicById(id);
+    const {title, description} = topic;
+    // console.log("here id", id);
     return(
         <>
-            <div>
-                <form className="flex flex-col gap-3">
-                    <input type="text" className="border border-slate-500 px-8 py-2" placeholder="Recipes Title"/>
-                    <input type="text" className="border border-slate-500 px-8 py-2" placeholder="Recipes Description"/>
-                    <button className="bg-green-600 text-white py-3 px-6 w-fit">Update Recipes</button>
-                </form>
-            </div>
+            <EditRecipeForm id={id} title={title} description={description}/>
         </>
     );
 }
