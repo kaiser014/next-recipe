@@ -5,11 +5,11 @@ import EditRecipeForm from "@/app/components/EditRecipeForm";
 
 const getTopicById = async(id) => {
     try {
-        const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+        const res = await fetch(`http://localhost:3000/api/recipes/${id}`, {
             cache: "no-store",
         })
         if(!res.ok){
-            throw new Error("Failed to fetch Topic");
+            throw new Error("Failed to fetch Recipe");
         }
         return res.json();
     } catch (error) {
@@ -18,12 +18,12 @@ const getTopicById = async(id) => {
 }
 export default async function EditRecipe({params}){
     const {id} = params;
-    const {topic} = await getTopicById(id);
-    const {title, description} = topic;
+    const {recipe} = await getTopicById(id);
+    const {title, instruction, ingredients} = recipe;
     // console.log("here id", id);
     return(
         <>
-            <EditRecipeForm id={id} title={title} description={description}/>
+            <EditRecipeForm id={id} title={title} instruction={instruction} ingredients={ingredients}/>
         </>
     );
 }

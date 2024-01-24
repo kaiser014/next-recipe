@@ -6,10 +6,10 @@ export default function RemoveBtn(props){
     const {id} = props;
     const router = useRouter();
 
-    const removeTopic = async() => {
+    const removeRecipe = async() => {
         const confirmed = confirm('Are you Sure?');
         if(confirmed){
-            const res = await fetch(`http://localhost:3000/api/topics?id=${id}`, {
+            const res = await fetch(`http://localhost:3000/api/recipes?id=${id}`, {
                 method: "DELETE",
             });
             
@@ -17,10 +17,10 @@ export default function RemoveBtn(props){
                 router.refresh();
             }
         }
-    }
+    }   
     return(
     <>
-        <button onClick={removeTopic} className="text-red-400">
+        <button onClick={removeRecipe} className="text-red-400">
             <HiOutlineTrash size={24}/>
         </button>
     </>
